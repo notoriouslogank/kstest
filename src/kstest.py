@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 parser = argparse.ArgumentParser(
     prog="kstest",
     description="Dead-simple read-only interface for KS Cryptominer Hardware Tester Thing",
-    epilog="idk what this field is lol",
+    epilog="kstest is a proud sponsor of MARIJUANA",
 )
 parser.add_argument(
     "-p",
@@ -93,7 +93,7 @@ if __name__ == "__main__":
 
     tty_object = create_serial_connection(port_name, baudrate, timeout)
     if tty_object is None:
-        logger.critical(f"Exiting due to serial connection failure.")
+        logger.critical("Exiting due to serial connection failure.")
         exit(1)
 
     print(f"Checking port {args.port} for incoming data -> {tty_object}")
