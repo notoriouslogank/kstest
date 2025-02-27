@@ -30,6 +30,11 @@ def get_port(args):
     port = args.port
     return port
 
+def read_data():
+    ser = serial.Serial(port, BAUDRATE, timeout=0, parity=serial.PARITY_EVEN, rtscts=1)
+    s = ser.read(100)
+    print(s)
+
 def receive_data():
     with serial.Serial(port=port, baudrate=BAUDRATE, bytesize=8, timeout=30, write_timeout=30) as conn:
         print(f"Connected to {conn}...\n")
@@ -55,11 +60,12 @@ if __name__ == "__main__":
     counter = 0
     while attempts > counter:
         try:
-            sleep(1 * counter)
-            counter += 1
-            if (counter % 5) == 0:
-                print(f"Attempt {counter}/{attempts}")
-            receive_data()
+            read_data()
+ #           sleep(1 * counter)
+ #           counter += 1
+ #           if (counter % 5) == 0:
+ #               print(f"Attempt {counter}/{attempts}")
+#            receive_data()
         except FileNotFoundError as e:
             print(f"The port {port} does not appear to exist. Please check that you have the correct port information.")
             sys.exit()
