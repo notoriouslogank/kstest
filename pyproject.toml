@@ -4,7 +4,7 @@ include = ["ktest"]
 
 [project]
 name = "kstest"
-version = '1.0.1'
+version = '1.0.2'
 authors = [{ name = "notoriouslogank", email = "logankdevemail@gmail.com" }]
 description = "A dead-simple pure-Python serial port interface for testing crypto mining machines."
 dependencies = ["pyserial", "rich"]
