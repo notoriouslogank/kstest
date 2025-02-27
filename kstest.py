@@ -53,8 +53,9 @@ def receive_data(port):
 #    with open("info.txt", 'a') as outfile:
 #        outfile.write(f"{data}")
 #    conn.close()
+args = parser.parse_args()
 port = get_port()
-read_data(port)
+receive_data(port)
 """if __name__ == "__main__":
     args = parser.parse_args()
     port = get_port(args)
