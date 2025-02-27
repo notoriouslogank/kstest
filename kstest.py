@@ -32,7 +32,7 @@ def get_port(args):
 
 def read_data(port):
     ser = serial.Serial(port, BAUDRATE, timeout=0, bytesize=8)
-    s = ser.readlines(10)
+    s = ser.readlines(100)
     print(s)
 
 
