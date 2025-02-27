@@ -5,9 +5,10 @@ ser = serial.Serial('/dev/tty1', baudrate=115200, bytesize=8, write_timeout=10, 
 
 def send_data(data):
     if ser.is_open:
-        ser.write(data.encode('utf-8'))
+        written = ser.write(data.encode('utf-8'))
+        print(written)
         ser.flush()
-        print(f'Send: {data}')
+        print(f'Send: {b'data'}')
     else:
         print("Port not open.")
 
