@@ -10,10 +10,6 @@ description = "A dead-simple pure-Python serial port interface for testing crypt
 dependencies = ["pyserial <= 3.5", "rich <= 13.9.4"]
 readme = "README.md"
 requires-python = ">=3.10.12"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "Operating System :: Linux",
-]
 
 [project.urls]
 Repository = "https://github.com/notoriouslogank/ktest.git"
