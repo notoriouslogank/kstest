@@ -54,7 +54,7 @@ def receive_data(port):
 #        outfile.write(f"{data}")
 #    conn.close()
 args = parser.parse_args()
-port = get_port()
+port = get_port(args)
 receive_data(port)
 """if __name__ == "__main__":
     args = parser.parse_args()
