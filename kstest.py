@@ -30,12 +30,13 @@ def get_port(args):
     port = args.port
     return port
 
-def read_data():
+def read_data(port):
     ser = serial.Serial(port, BAUDRATE, timeout=0, parity=serial.PARITY_EVEN, rtscts=1)
     s = ser.read(100)
     print(s)
 
-def receive_data():
+
+def receive_data(port):
     with serial.Serial(port=port, baudrate=BAUDRATE, bytesize=8, timeout=30, write_timeout=30) as conn:
         print(f"Connected to {conn}...\n")
         try:
@@ -52,23 +53,24 @@ def receive_data():
 #    with open("info.txt", 'a') as outfile:
 #        outfile.write(f"{data}")
 #    conn.close()
-
-if __name__ == "__main__":
+port = get_port()
+read_data(port)
+"""if __name__ == "__main__":
     args = parser.parse_args()
     port = get_port(args)
     attempts = get_attempts(args)
     counter = 0
     while attempts > counter:
         try:
-            read_data()
- #           sleep(1 * counter)
- #           counter += 1
- #           if (counter % 5) == 0:
- #               print(f"Attempt {counter}/{attempts}")
-#            receive_data()
+            sleep(1 * counter)
+            counter += 1
+            if (counter % 5) == 0:
+                print(f"Attempt {counter}/{attempts}")
+            receive_data()
         except FileNotFoundError as e:
             print(f"The port {port} does not appear to exist. Please check that you have the correct port information.")
             sys.exit()
         except serial.SerialException as e:
             print(f"Error establishing a connection with serial port {port}:\n{e}\nRetrying...")
     sys.exit(f"Reached attempt limit: {counter}")
+"""
