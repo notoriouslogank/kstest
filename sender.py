@@ -8,7 +8,8 @@ def send_data(data):
         written = ser.write(data.encode('utf-8'))
         print(written)
         ser.flush()
-        print(f'Send: {b'data'}')
+        print(f'Send: {data}')
+        return written
     else:
         print("Port not open.")
 
@@ -17,7 +18,8 @@ if __name__ == "__main__":
     try:
         while True:
             msg = input("Message: ")
-            send_data(msg)
+            written = send_data(msg)
+            print(written)
             time.sleep(0.1)
     except KeyboardInterrupt:
         print("Stopping...")
