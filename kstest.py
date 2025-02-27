@@ -40,9 +40,9 @@ def receive_data(port):
     with serial.Serial(port=port, baudrate=BAUDRATE, bytesize=8, timeout=30, write_timeout=30) as conn:
         print(f"Connected to {conn}...\n")
         try:
-            data = conn.readlines(10)
+            data = conn.read(8)
             with open('info.txt', 'a') as outfile:
-                outfile.write(f"{data}")
+                outfile.write(f"{data.decode('utf-8')}")
         except Exception as e:
             print(f"Something got pretty fucked mate: {e}")
 
@@ -55,8 +55,8 @@ def receive_data(port):
 #    conn.close()
 args = parser.parse_args()
 port = get_port(args)
-read_data(port)
-#receive_data(port)
+#read_data(port)
+receive_data(port)
 """if __name__ == "__main__":
     args = parser.parse_args()
     port = get_port(args)
