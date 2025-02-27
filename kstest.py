@@ -40,7 +40,7 @@ def receive_data(port):
     with serial.Serial(port=port, baudrate=BAUDRATE, bytesize=8, timeout=30, write_timeout=30) as conn:
         print(f"Connected to {conn}...\n")
         try:
-            data = conn.readlines(10).decode(encoding='utf-8')
+            data = conn.readlines(10)
             with open('info.txt', 'a') as outfile:
                 outfile.write(f"{data}")
         except Exception as e:
