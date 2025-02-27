@@ -11,9 +11,7 @@ if __name__ == "__main__":
     tty_object.parity = serial.PARITY_NONE
     tty_object.stopbits = serial.STOPBITS_ONE
     tty_object.timeout = 60
-    print(
-        f"Checking port {PORT_NAME} for incoming data.\nConnection will timeout in {tty_object.timeout} seconds."
-    )
+    print(f"Checking port {PORT_NAME} for incoming data -> {tty_object}")
 
     received_data = tty_object.read()
     decoded_data = received_data.decode(encoding="ascii")
