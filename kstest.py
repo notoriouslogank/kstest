@@ -33,7 +33,7 @@ def get_port(args):
 def await_data(port):
     conn = serial.Serial(port=port, baudrate=BAUDRATE)
     print(f"Connected to {conn}...\n")
-    data = conn.readline().decode(encoding='utf-8')
+    data = conn.read(100).decode(encoding='utf-8')
     with open("info.txt", 'a') as outfile:
         outfile.write(f"{data}")
     conn.close()
