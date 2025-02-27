@@ -27,16 +27,26 @@ def get_attempts(args):
     return attempts
 
 def get_port(args):
-    port = path.join(args.port)
+    port = args.port
     return port
 
-def await_data(port):
-    conn = serial.Serial(port=port, baudrate=BAUDRATE)
-    print(f"Connected to {conn}...\n")
-    data = conn.read(100).decode(encoding='utf-8')
-    with open("info.txt", 'a') as outfile:
-        outfile.write(f"{data}")
-    conn.close()
+def receive_data():
+    with serial.Serial(port=port, baudrate=BAUDRATE) as conn:
+        print(f"Connected to {conn}...\n")
+        try:
+            data = conn.read(100).decode(encoding='utf-8', errors='replace')
+            with open('info.txt', 'a') as outfile:
+                outfile.write(f"{data}")
+        except Exception as e:
+            print(f"Something got pretty fucked mate: {e}")
+
+#def await_data(port):
+#    conn = serial.Serial(port=port, baudrate=BAUDRATE)
+#    print(f"Connected to {conn}...\n")
+#    data = conn.read(100).decode(encoding='utf-8')
+#    with open("info.txt", 'a') as outfile:
+#        outfile.write(f"{data}")
+#    conn.close()
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -45,11 +55,11 @@ if __name__ == "__main__":
     counter = 0
     while attempts > counter:
         try:
-            sleep(1)
+            sleep(1 * counter)
             counter += 1
             if (counter % 5) == 0:
                 print(f"Attempt {counter}/{attempts}")
-            await_data(port)
+            receive_data(port)
         except FileNotFoundError as e:
             print(f"The port {port} does not appear to exist. Please check that you have the correct port information.")
             sys.exit()
