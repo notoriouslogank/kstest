@@ -100,18 +100,14 @@ if __name__ == "__main__":
 
     try:
         received_data = tty_object.read(BYTES_TO_READ)
-        decoded_data = received_data.decode(encoding="ascii", errors="replace")
         if outfile:
             logger.info(f"Outputting data to {outfile}...")
-            with open(outfile, "a") as f:
-                f.write(decoded_data)
+            with open(outfile, "wb") as f:
+                f.write(received_data)
             print(f"Wrote outfile -> {outfile}")
         else:
             output = f"The following data was received; if this data is not correctly decoded, please note that in your bug report: DATA BEGINS\n{decoded_data}"
             print(output)
-        with open('data', 'wb') as f:
-            f.write(received_data)
-            logger.debug("Wrote binary file.")
     except serial.SerialException as e:
         logger.error(f"Serial communication error: {e}")
     except Exception as e:
