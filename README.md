@@ -19,13 +19,13 @@ For now, you'll have to manually install, but a test.pypl release is at least in
 ### Clone the repo
 
 ```bash
-git clone https://github.com/notoriouslogank/ks-tester.git
+git clone https://github.com/notoriouslogank/kstester.git
 ```
 
 ### Create a Virtual Environment (*RECOMMENDED*)
 
 ```bash
-cd ks-tester
+cd kstester
 python3 -m venv .venv # create virtual environment in .venv dir
 source .venv/bin/activate # activate virtual environment
 ```
