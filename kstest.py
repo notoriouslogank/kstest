@@ -31,8 +31,8 @@ def get_port(args):
     return port
 
 def read_data(port):
-    ser = serial.Serial(port, BAUDRATE, timeout=0, parity=serial.PARITY_EVEN, rtscts=1)
-    s = ser.read(100)
+    ser = serial.Serial(port, BAUDRATE, timeout=0, bytesize=8)
+    s = ser.readlines(10)
     print(s)
 
 
