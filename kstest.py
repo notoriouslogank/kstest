@@ -59,7 +59,7 @@ if __name__ == "__main__":
             counter += 1
             if (counter % 5) == 0:
                 print(f"Attempt {counter}/{attempts}")
-            receive_data(port)
+            receive_data()
         except FileNotFoundError as e:
             print(f"The port {port} does not appear to exist. Please check that you have the correct port information.")
             sys.exit()
