@@ -31,7 +31,7 @@ def get_port(args):
     return port
 
 def receive_data():
-    with serial.Serial(port=port, baudrate=BAUDRATE) as conn:
+    with serial.Serial(port=port, baudrate=BAUDRATE, bytesize=8, timeout=30, write_timeout=30) as conn:
         print(f"Connected to {conn}...\n")
         try:
             data = conn.read(100).decode(encoding='utf-8', errors='replace')
