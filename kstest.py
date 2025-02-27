@@ -55,7 +55,8 @@ def receive_data(port):
 #    conn.close()
 args = parser.parse_args()
 port = get_port(args)
-receive_data(port)
+read_data(port)
+#receive_data(port)
 """if __name__ == "__main__":
     args = parser.parse_args()
     port = get_port(args)
