@@ -137,7 +137,7 @@ if __name__ == "__main__":
     while True:
         try:
             received_data = tty_object.read(buffersize)
-            print(received_data.decode())
+            print(received_data)
             if outfile:
                 logger.info(f"Outputting data to {outfile}...")
                 with open(outfile, "wb") as f:
