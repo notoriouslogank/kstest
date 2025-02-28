@@ -89,23 +89,23 @@ def main_loop(port_name, baudrate, timeout, buffersize):
     tty_object = create_serial_connection(
         port_name, baudrate, timeout, buffersize)
     logger.debug(f"Using tty_object: {tty_object}")
-    output_line = []
+    # output_line = []
 
+#    try:
+#        logger.debug("Attempting to parse buffer...")
+#        for c in tty_object.read(buffersize):
+#            output_line.append(c)
+#            if c == '\r':
+#                print("\r" + "".join(output_line))
+#            output_line = []
     try:
-        logger.debug("Attempting to parse buffer...")
-        for c in tty_object.read(buffersize):
-            output_line.append(c)
-            if c == '\r':
-                print("\r" + "".join(output_line))
-            output_line = []
-            break
-#        received_data = tty_object.read(buffersize)
-#        print(received_data.decode())
-#        if outfile:
-#            logger.info(f"Outputting data to {outfile}...")
-#            with open(outfile, "wb") as f:
-#                f.write(received_data)
-#            print(f"Wrote outfile -> {outfile}")
+        received_data = tty_object.read(buffersize)
+        print(received_data.decode())
+        if outfile:
+            logger.info(f"Outputting data to {outfile}...")
+            with open(outfile, "wb") as f:
+                f.write(received_data)
+                print(f"Wrote outfile -> {outfile}")
     except serial.SerialException as e:
         logger.critical(f"Serial communication error: {e}")
         tty_object.close()
