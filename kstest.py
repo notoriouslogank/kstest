@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 parser = argparse.ArgumentParser(
     prog="kstest",
     description="Dead-simple read-only interface for KS Cryptominer Hardware Tester Thing",
-    epilog="kstest is a proud sponsor of MARIJUANA",
+    epilog="WU TANG CLAN AIN'T NOTHIN' TO FUCK WITH",
 )
 parser.add_argument(
     "-p",
@@ -56,6 +56,7 @@ parser.add_argument(
     "-f",
     "--file",
     type=str,
+    default=None,
     help="Destination path for output file if provided",
     required=False,
 )
@@ -107,7 +108,7 @@ def main_loop(port_name, baudrate, timeout):
 
 
 if __name__ == "__main__":
-    logger.debug(f"Program start.")
+    logger.debug("Program start.")
     args = parser.parse_args()
     logger.debug(f"Parsed the following args: {args}")
     port_name, baudrate, timeout = get_tty_info(args)
