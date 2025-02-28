@@ -3,3 +3,4 @@
 dist
 kstest.egg-info/*
 data
+kstest.log.old
