@@ -10,7 +10,7 @@ logger.setLevel(logging.DEBUG)
 
 if not logger.hasHandlers():
     console_handler = RichHandler(rich_tracebacks=True, markup=True)
-    console_handler.setLevel(logging.WARNING)
+    console_handler.setLevel(logging.DEBUG)
     console_formatter = logging.Formatter(LOG_FORMAT, datefmt=DATE_FORMAT)
     console_handler.setFormatter(console_formatter)
 
