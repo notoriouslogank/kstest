@@ -108,7 +108,7 @@ if __name__ == "__main__":
                 print(f"Wrote outfile -> {outfile}")
         except serial.SerialException as e:
             logger.error(f"Serial communication error: {e}")
-            return False
+            False
         except Exception as e:
             logger.error(f"Unexpected error: {e}")
-            return False
+            True
