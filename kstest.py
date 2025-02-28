@@ -106,7 +106,7 @@ if __name__ == "__main__":
                 f.write(received_data)
             print(f"Wrote outfile -> {outfile}")
         else:
-            output = f"The following data was received; if this data is not correctly decoded, please note that in your bug report: DATA BEGINS\n{decoded_data}"
+            output = received_data
             print(output)
     except serial.SerialException as e:
         logger.error(f"Serial communication error: {e}")
