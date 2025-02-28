@@ -76,7 +76,7 @@ parser.add_argument(
 def get_tty_info(args):
     logger.debug("Getting tty info.")
     logger.debug(
-        f"Parsed the following arguments:{args.port}, {args.baud}, {args.timeout}, {args.buffersize}")
+        f"Parsed the following arguments:{args}")
     return args.port, args.baud, args.timeout, args.buffersize
 
 
