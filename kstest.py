@@ -5,7 +5,7 @@ from utils.logger import logger
 
 DEFAULT_PORT = "/dev/ttyUSB0"
 DEFAULT_BAUDRATE = 112500
-DEFAULT_TIMEOUT = 2
+DEFAULT_TIMEOUT = 0
 DEFAULT_BUFFERSIZE = 64
 
 parser = argparse.ArgumentParser(
@@ -66,7 +66,7 @@ def outfile_flag(args):
     return args.file if args.file else False
 
 
-def create_serial_connection(port, baudrate, timeout, bytesize):
+def create_serial_connection(port, baudrate, timeout, buffersize):
     logger.debug("Attempting connection...")
     try:
         tty_object = serial.Serial(port)
@@ -88,7 +88,7 @@ def main_loop(port_name, baudrate, timeout, buffersize):
     logger.debug("Begin main loop.")
     tty_object = create_serial_connection(
         port_name, baudrate, timeout, buffersize)
-    logger.debug("Using tty_object: {tty_object}")
+    logger.debug(f"Using tty_object: {tty_object}")
     output_line = []
 
     try:
