@@ -84,31 +84,54 @@ def create_serial_connection(port, baudrate, timeout):
         return None
 
 
+def main_loop(port_name, baudrate, timeout):
+    tty_object = create_serial_connection(port_name, baudrate, timeout)
+    if tty_object is None:
+        logger.critical("Exiting due to serial connection failure.")
+        exit(1)
+
+    try:
+        received_data = tty_object.read(BYTES_TO_READ)
+        print(received_data.decode())
+        if outfile:
+            logger.info(f"Outputting data to {outfile}...")
+            with open(outfile, "wb") as f:
+                f.write(received_data)
+            print(f"Wrote outfile -> {outfile}")
+    except serial.SerialException as e:
+        logger.error(f"Serial communication error: {e}")
+        return False
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+        return False
+
+
 if __name__ == "__main__":
     logger.debug(f"Program start.")
     args = parser.parse_args()
     logger.debug(f"Parsed the following args: {args}")
     port_name, baudrate, timeout = get_tty_info(args)
     outfile = outfile_flag(args)
-
-    tty_object = create_serial_connection(port_name, baudrate, timeout)
-    if tty_object is None:
-        logger.critical("Exiting due to serial connection failure.")
-        exit(1)
-
-    print(f"Checking port {args.port} for incoming data -> {tty_object}")
     while True:
-        try:
-            received_data = tty_object.read(BYTES_TO_READ)
-            print(received_data.decode())
-            if outfile:
-                logger.info(f"Outputting data to {outfile}...")
-                with open(outfile, "wb") as f:
-                    f.write(received_data)
-                print(f"Wrote outfile -> {outfile}")
-        except serial.SerialException as e:
-            logger.error(f"Serial communication error: {e}")
-            False
-        except Exception as e:
-            logger.error(f"Unexpected error: {e}")
-            True
+        main_loop(port_name, baudrate, timeout)
+    # tty_object = create_serial_connection(port_name, baudrate, timeout)
+    # if tty_object is None:
+    #    logger.critical("Exiting due to serial connection failure.")
+    #    exit(1)
+
+    # print(f"Checking port {args.port} for incoming data -> {tty_object}")
+    # while True:
+    #    try:
+    #        received_data = tty_object.read(BYTES_TO_READ)
+    #        print(received_data.decode())
+    #        if outfile:
+    #            logger.info(f"Outputting data to {outfile}...")
+    #            with open(outfile, "wb") as f:
+    #                f.write(received_data)
+    #            print(f"Wrote outfile -> {outfile}")
+    #    except serial.SerialException as e:
+    #        logger.error(f"Serial communication error: {e}")
+    #        False
+    #    except Exception as e:
+    #        logger.error(f"Unexpected error: {e}")
+    #        True
