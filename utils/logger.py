@@ -5,7 +5,7 @@ from rich.logging import RichHandler
 LOG_FORMAT = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("kstest")
 logger.setLevel(logging.DEBUG)
 
 if not logger.hasHandlers():
