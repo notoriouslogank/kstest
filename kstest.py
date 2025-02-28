@@ -70,14 +70,19 @@ parser.add_argument(
 
 
 def get_tty_info(args):
+    logger.debug("Getting tty info.")
+    logger.info(
+        f"Parsed the following arguments:{args.port}, {args.baud}, {args.timeout}, {args.buffersize}")
     return args.port, args.baud, args.timeout, args.buffersize
 
 
 def outfile_flag(args):
+    logger.debug("Getting outfile flag.")
     return args.file if args.file else False
 
 
 def create_serial_connection(port, baudrate, timeout, bytesize):
+    logger.debug("Attempting to create serial connection...")
     try:
         tty_object = serial.Serial(port)
         tty_object.baudrate = baudrate
@@ -94,6 +99,7 @@ def create_serial_connection(port, baudrate, timeout, bytesize):
 
 
 def main_loop(port_name, baudrate, timeout, buffersize):
+    logger.debug("Begin main loop.")
     tty_object = create_serial_connection(
         port_name, baudrate, timeout, buffersize)
     if tty_object is None:
@@ -119,19 +125,20 @@ def main_loop(port_name, baudrate, timeout, buffersize):
     except serial.SerialException as e:
         logger.error(f"Serial communication error: {e}")
         tty_object.close()
-        return False
+        exit(1)
     except Exception as e:
         tty_object.close()
-        logger.error(f"Unexpected error: {e}")
-        return False
+        logger.critical(f"Shit's fucked bro: {e}")
+        exit(1)
     finally:
+        logger.info(f"Closing connection on port {tty_object}")
         tty_object.close()
+        exit(0)
 
 
 if __name__ == "__main__":
     logger.debug("Program start.")
     args = parser.parse_args()
-    logger.debug(f"Parsed the following args: {args}")
     port_name, baudrate, timeout, buffersize = get_tty_info(args)
     outfile = outfile_flag(args)
     while True:
