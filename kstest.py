@@ -1,35 +1,16 @@
 import argparse
-import logging
-import os
 import serial
 from rich import print
-from rich.logging import RichHandler
+from logger import logger
 
-LOGFILE = "kstest.log"
-FORMAT = "%(asctime)s | %(levelname)-8s | %(message)s"
 DEFAULT_PORT = "/dev/ttyUSB0"
 DEFAULT_BAUDRATE = 112500
 DEFAULT_TIMEOUT = 2
 DEFAULT_BUFFERSIZE = 64
 
-if os.path.exists(LOGFILE):
-    os.rename(LOGFILE, f"{LOGFILE}.old")
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format=FORMAT,
-    datefmt="%Y-%m-%d %H:%M:%S",
-    handlers=[
-        RichHandler(rich_tracebacks=True, markup=True),
-        logging.FileHandler("kstest.log", encoding="utf-8"),
-    ],
-)
-
-logger = logging.getLogger(__name__)
-
 parser = argparse.ArgumentParser(
     prog="kstest",
-    description="Dead-simple read-only interface for KS Cryptominer Hardware Tester Thing",
+    description="Dead-simple read-only interface for accepting serial datastream",
     epilog="WU TANG CLAN AIN'T NOTHIN' TO FUCK WITH",
 )
 parser.add_argument(
@@ -99,7 +80,7 @@ def create_serial_connection(port, baudrate, timeout, bytesize):
         return tty_object
     except serial.SerialException as e:
         logger.error(f"Failed to create serial connection: {e}")
-        logger.critical("Failed to create serial connection: {e}")
+        logger.critical(f"Failed to create serial connection: {e}")
         exit(1)
 
 
