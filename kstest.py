@@ -9,7 +9,7 @@ FORMAT = "%(asctime)s | %(levelname)-8s | %(message)s"
 DEFAULT_PORT = "/dev/ttyUSB0"
 DEFAULT_BAUDRATE = 112500
 DEFAULT_TIMEOUT = 2
-BYTES_TO_READ = 1024
+BYTES_TO_READ = 64
 
 logging.basicConfig(
     level=logging.DEBUG,
