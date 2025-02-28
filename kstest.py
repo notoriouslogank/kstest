@@ -8,7 +8,7 @@ from rich.logging import RichHandler
 FORMAT = "%(asctime)s | %(levelname)-8s | %(message)s"
 DEFAULT_PORT = "/dev/ttyUSB0"
 DEFAULT_BAUDRATE = 9600
-DEFAULT_TIMEOUT = 60
+DEFAULT_TIMEOUT = 2
 BYTES_TO_READ = 1024
 
 logging.basicConfig(
@@ -97,18 +97,16 @@ if __name__ == "__main__":
         exit(1)
 
     print(f"Checking port {args.port} for incoming data -> {tty_object}")
-
-    try:
-        received_data = tty_object.read(BYTES_TO_READ)
-        if outfile:
-            logger.info(f"Outputting data to {outfile}...")
-            with open(outfile, "wb") as f:
-                f.write(received_data)
-            print(f"Wrote outfile -> {outfile}")
-        else:
-            output = received_data
-            print(output)
-    except serial.SerialException as e:
-        logger.error(f"Serial communication error: {e}")
-    except Exception as e:
-        logger.error(f"Unexpected error: {e}")
+    while True:
+        try:
+            received_data = tty_object.read(BYTES_TO_READ)
+            print(received_data.decode())
+            if outfile:
+                logger.info(f"Outputting data to {outfile}...")
+                with open(outfile, "wb") as f:
+                    f.write(received_data)
+                print(f"Wrote outfile -> {outfile}")
+        except serial.SerialException as e:
+            logger.error(f"Serial communication error: {e}")
+        except Exception as e:
+            logger.error(f"Unexpected error: {e}")
