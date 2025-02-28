@@ -1,15 +1,19 @@
 import argparse
 import logging
-
+import os
 import serial
 from rich import print
 from rich.logging import RichHandler
 
+LOGFILE = "kstest.log"
 FORMAT = "%(asctime)s | %(levelname)-8s | %(message)s"
 DEFAULT_PORT = "/dev/ttyUSB0"
 DEFAULT_BAUDRATE = 112500
 DEFAULT_TIMEOUT = 2
 DEFAULT_BUFFERSIZE = 64
+
+if os.path.exists(LOGFILE):
+    os.rename(LOGFILE, f"{LOGFILE}.old")
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -71,7 +75,7 @@ parser.add_argument(
 
 def get_tty_info(args):
     logger.debug("Getting tty info.")
-    logger.info(
+    logger.debug(
         f"Parsed the following arguments:{args.port}, {args.baud}, {args.timeout}, {args.buffersize}")
     return args.port, args.baud, args.timeout, args.buffersize
 
@@ -82,7 +86,7 @@ def outfile_flag(args):
 
 
 def create_serial_connection(port, baudrate, timeout, bytesize):
-    logger.debug("Attempting to create serial connection...")
+    logger.debug("Attempting connection...")
     try:
         tty_object = serial.Serial(port)
         tty_object.baudrate = baudrate
@@ -95,20 +99,19 @@ def create_serial_connection(port, baudrate, timeout, bytesize):
         return tty_object
     except serial.SerialException as e:
         logger.error(f"Failed to create serial connection: {e}")
-        return None
+        logger.critical("Failed to create serial connection: {e}")
+        exit(1)
 
 
 def main_loop(port_name, baudrate, timeout, buffersize):
     logger.debug("Begin main loop.")
     tty_object = create_serial_connection(
         port_name, baudrate, timeout, buffersize)
-    if tty_object is None:
-        logger.critical("Exiting due to serial connection failure.")
-        exit(1)
-
+    logger.debug("Using tty_object: {tty_object}")
     output_line = []
 
     try:
+        logger.debug("Attempting to parse buffer...")
         for c in tty_object.read(buffersize):
             output_line.append(c)
             if c == '\r':
@@ -123,12 +126,13 @@ def main_loop(port_name, baudrate, timeout, buffersize):
 #                f.write(received_data)
 #            print(f"Wrote outfile -> {outfile}")
     except serial.SerialException as e:
-        logger.error(f"Serial communication error: {e}")
+        logger.critical(f"Serial communication error: {e}")
         tty_object.close()
         exit(1)
     except Exception as e:
         tty_object.close()
-        logger.critical(f"Shit's fucked bro: {e}")
+        logger.critical(
+            f"An unforeseen exception has occured:\nShit's fucked bro: {e}")
         exit(1)
     finally:
         logger.info(f"Closing connection on port {tty_object}")
@@ -137,10 +141,11 @@ def main_loop(port_name, baudrate, timeout, buffersize):
 
 
 if __name__ == "__main__":
-    logger.debug("Program start.")
+    logger.info("Program start.")
     args = parser.parse_args()
     port_name, baudrate, timeout, buffersize = get_tty_info(args)
     outfile = outfile_flag(args)
+    logger.debug("Beginning main loop...")
     while True:
         main_loop(port_name, baudrate, timeout, buffersize)
     # tty_object = create_serial_connection(port_name, baudrate, timeout)
