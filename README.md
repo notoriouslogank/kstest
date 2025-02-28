@@ -47,7 +47,7 @@ python3 kstest.py
 If you'd like to specify an alternate port, add the `-p` flag:
 
 ```bash
-python3 ktest.py -p /dev/ttyS3
+python3 ktest.py -p /dev/tty*
 ```
 
 For further information, check the help:

@@ -1,4 +1,7 @@
 .venv
-*.log
+logs/*.log
 dist
 kstest.egg-info/*
+data
+kstest.log.old
+__pycache__/
