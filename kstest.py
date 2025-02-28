@@ -5,7 +5,7 @@ from utils.logger import logger
 
 DEFAULT_PORT = "/dev/ttyUSB0"
 DEFAULT_BAUDRATE = 112500
-DEFAULT_TIMEOUT = 0
+DEFAULT_TIMEOUT = 2
 DEFAULT_BUFFERSIZE = 64
 
 parser = argparse.ArgumentParser(
