@@ -6,7 +6,7 @@ from utils.logger import logger
 DEFAULT_PORT = "/dev/ttyUSB0"
 DEFAULT_BAUDRATE = 112500
 DEFAULT_TIMEOUT = 2
-DEFAULT_BUFFERSIZE = 64
+DEFAULT_BUFFERSIZE = 4096
 
 parser = argparse.ArgumentParser(
     prog="kstest",
@@ -135,9 +135,9 @@ if __name__ == "__main__":
         exit(1)
         print(f"Checking port {args.port} for incoming data -> {tty_object}")
     while True:
+        data = []
         try:
             received_data = tty_object.read(buffersize)
-            print(received_data)
             if outfile:
                 logger.info(f"Outputting data to {outfile}...")
                 with open(outfile, "wb") as f:
