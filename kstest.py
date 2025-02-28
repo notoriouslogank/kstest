@@ -1,7 +1,7 @@
 import argparse
 import serial
 from rich import print
-from logger import logger
+from utils.logger import logger
 
 DEFAULT_PORT = "/dev/ttyUSB0"
 DEFAULT_BAUDRATE = 112500
