@@ -1,5 +1,5 @@
 .venv
-*.log
+logs/*.log
 dist
 kstest.egg-info/*
 data
