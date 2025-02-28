@@ -115,7 +115,7 @@ def main_loop(port_name, baudrate, timeout, buffersize):
         for c in tty_object.read(buffersize):
             output_line.append(c)
             if c == '\r':
-                print("\n" + "".join(output_line))
+                print("\r" + "".join(output_line))
                 output_line = []
                 break
 #        received_data = tty_object.read(buffersize)
